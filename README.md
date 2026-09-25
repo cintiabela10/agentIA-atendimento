@@ -1,6 +1,6 @@
-# strands-agents-ollama
-Strands Agents usando Ollama baseado no workshop "Criação de agentes de IA com o SDK Strands: de loops simples a enxames de vários agentes" do AWS Builder Center.
-Todo código e organização foi basicamente criado seguindo o workshop disponível [aqui](https://catalog.us-east-1.prod.workshops.aws/workshops/083b80d7-5a90-402b-9bb4-19fb53092808/en-US), com adaptações em português e usando o modelo Ollama para rodar o agente localmente sem precisar de credenciais AWS.
+# agentIA
+Agente de IA de atendimento ao cliente baseado no workshop "Criação de agentes de IA com o SDK Strands: de loops simples a enxames de vários agentes" do AWS Builder Center.
+Todo código e organização foi basicamente criado seguindo o workshop disponível [aqui](https://catalog.us-east-1.prod.workshops.aws/workshops/083b80d7-5a90-402b-9bb4-19fb53092808/en-US), com adaptações em português e usando modelos gratuitos do Hugging Face com limitação de uso diário.
 
 # Visão Geral
 Construir um agente de atendimento ao cliente com o Strands Agents que pesquisa clientes, verifica pedidos e processa reembolsos.
