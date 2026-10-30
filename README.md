@@ -1,58 +1,78 @@
-# agentIA
+# Agente de atendimento para loja online
 
-Protótipo de um agente de atendimento ao cliente para uma loja de eletrônicos. O projeto foi inspirado no workshop [Criação de agentes de IA com o SDK Strands: de loops simples a enxames de vários agentes](https://catalog.us-east-1.prod.workshops.aws/workshops/083b80d7-5a90-402b-9bb4-19fb53092808/en-US), mas a implementação atual **não utiliza o Strands Agents**.
+## O que é o projeto?
 
-O agente foi implementado em Python usando o cliente `openai` para acessar a API compatível com OpenAI da [Groq](https://groq.com/), com o modelo `qwen/qwen3.8-27b`. As informações de clientes e pedidos são lidas de `base_dados.json`, que também é usado para registrar chamados de suporte.
+Este projeto é um agente de atendimento para uma loja online. Ele conversa com o cliente pelo terminal, consulta dados locais de clientes e pedidos e pode abrir chamados de suporte.
 
-## O que o programa faz
+O agente usa Python e a API compatível com OpenAI da [Groq](https://groq.com/), com o modelo configurado em `config.py`. As informações são armazenadas em `data_base.json`.
 
-- Recebe mensagens do usuário em um terminal interativo.
-- Consulta o modelo de linguagem para decidir se precisa usar uma ferramenta.
-- Busca dados de um cliente pelo ID.
-- Consulta o histórico de pedidos de um cliente, incluindo status, datas e código de rastreio.
-- Abre chamados de suporte técnico e gera um protocolo.
-- Envia os resultados das ferramentas de volta ao modelo para produzir a resposta final.
+## Como rodar?
 
-As ferramentas disponíveis são definidas em `ferramentas.py`:
+### 1. Instale as dependências
 
-- `buscar_cliente`
-- `obter_historico_pedido`
-- `abrir_chamado_suporte`
+Na raiz do projeto, execute:
 
-## Fluxo de uma solicitação
-
-```text
-Usuário -> modelo de linguagem -> chamada de ferramenta (opcional)
-		 -> resultado da ferramenta -> modelo de linguagem -> resposta
+```bash
+pip install -r requirements.txt
 ```
 
-Na implementação atual, o programa faz uma chamada inicial ao modelo. Quando há chamadas de ferramentas, executa as funções correspondentes e faz uma segunda chamada ao modelo com os resultados. Não há uma arquitetura de múltiplos agentes nem um loop de ferramentas contínuo.
+### 2. Configure a chave da Groq
 
-## Configuração
+Crie um arquivo `.env` na raiz do projeto com sua chave de API:
 
-1. Instale as dependências:
+```env
+GROQ_API_KEY=sua-chave-aqui
+```
 
-	```bash
-	pip install -r requirements.txt
-	```
-
-2. Crie um arquivo `.env` na raiz do projeto com uma chave da Groq:
-
-	```env
-	GROQ_API_KEY=sua-chave-aqui
-	```
-
-## Como executar
+### 3. Inicie o agente
 
 ```bash
 python agent.py
 ```
 
-Digite uma solicitação no terminal. Para encerrar, use `sair`, `exit`, `quit` ou `fechar`.
+Digite sua solicitação no terminal. Para encerrar, digite `sair`.
+
+## Quais ferramentas(tools) existem?
+
+O agente possui as seguintes ferramentas:
+
+- **`get_customer`**: busca os dados de um cliente pelo ID.
+- **`get_order_history`**: consulta o histórico de pedidos de um cliente, incluindo informações como status, datas e código de rastreio.
+- **`open_support_ticket`**: abre um chamado de suporte para um cliente, registra a descrição do problema e gera um protocolo.
+
+## Fluxo de uma solicitação
+
+```text
+Usuário -> modelo de linguagem -> chamada de tool (opcional)
+         -> resultado da tool -> modelo de linguagem -> resposta
+```
+
+O modelo decide quando usar uma tool. O programa executa a função correspondente, envia o resultado de volta ao modelo e exibe a resposta final no terminal.
 
 ## Estrutura do projeto
 
-- `agent.py`: configura o cliente da Groq, define o prompt do sistema e executa o agente.
-- `ferramentas.py`: implementa as ferramentas e seus schemas enviados ao modelo.
-- `base_dados.json`: banco de dados local de clientes, pedidos e chamados.
-- `requirements.txt`: dependências Python do projeto.
+```text
+.
+├── agent.py
+├── config.py
+├── data_base.json
+├── db.py
+├── requirements.txt
+├── .env.example
+└── tools/
+    ├── __init__.py
+    ├── customers.py
+    ├── orders.py
+    └── support.py
+```
+
+- `agent.py`: executa o loop de conversa e processa as chamadas de tools.
+- `config.py`: carrega a variável `GROQ_API_KEY`, configura o cliente da Groq e define o prompt do sistema.
+- `data_base.json`: banco de dados local de clientes, pedidos e chamados.
+- `db.py`: fornece as funções para ler e salvar o banco de dados local.
+- `requirements.txt`: lista as dependências Python do projeto.
+- `.env.example`: exemplo das variáveis de ambiente necessárias.
+- `tools/customers.py`: implementa a tool `get_customer`.
+- `tools/orders.py`: implementa a tool `get_order_history`.
+- `tools/support.py`: implementa a tool `open_support_ticket`.
+- `tools/__init__.py`: registra as tools disponíveis para o agente.
