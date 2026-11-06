@@ -4,7 +4,7 @@
       "nome": "Ana Bento",
       "email": "ana.bento@exemplo.br",
       "telefone": "1232-1232",
-      "status_conta": "ativa"
+      "status_conta": "suspensa"
     },
     "C-0002": {
       "nome": "Pedro Correia",
@@ -25,7 +25,7 @@
         "id_pedido": "P-5521",
         "item": "Fone Bluetooth",
         "preco": 44.99,
-        "status": "Entregue",
+        "status": "entregue",
         "data_pedido": "20-05-2026",
         "data_entrega": "28-05-2026",
         "codigo_rastreio": "RST-998877"
@@ -34,7 +34,7 @@
         "id_pedido": "P-5488",
         "item": "Mouse",
         "preco": 47.0,
-        "status": "Enviado",
+        "status": "enviado",
         "data_pedido": "01-06-2026",
         "entrega_estimada": "06-06-2026",
         "codigo_rastreio": "RST-887766"
@@ -45,7 +45,7 @@
         "id_pedido": "P-5762",
         "item": "Teclado Gamer",
         "preco": 144.99,
-        "status": "Atrasado",
+        "status": "atrasado",
         "data_pedido": "15-05-2026",
         "entrega_estimada": "25-05-2026",
         "codigo_rastreio": "RST-665544"
@@ -54,7 +54,7 @@
         "id_pedido": "P-5382",
         "item": "Monitor",
         "preco": 68.0,
-        "status": "Enviado",
+        "status": "enviado",
         "data_pedido": "12-07-2026",
         "entrega_estimada": "26-07-2026",
         "codigo_rastreio": "RST-887766"
@@ -65,7 +65,7 @@
         "id_pedido": "P-5392",
         "item": "Microfone",
         "preco": 49.99,
-        "status": "Enviado",
+        "status": "enviado",
         "data_pedido": "23-08-2026",
         "entrega_estimada": "28-07-2026",
         "codigo_rastreio": "RST-443322"

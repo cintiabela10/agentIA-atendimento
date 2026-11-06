@@ -47,3 +47,41 @@ OPEN_TICKET_SCHEMA = {
         },
     },
 }
+
+def list_open_tickets(customer_id: str) -> dict:
+    """Lista os chamados abertos de um cliente específico.
+    
+    Args:
+        customer_id: ID do cliente (ex.: 'C-0001').
+    """
+    db = load_db()
+    chamados = db.get("chamado", {})
+    
+    tickets_abertos = []
+    for protocol, dados in chamados.items():
+        if dados.get("customer_id") == customer_id and dados.get("status") == "aberto":
+            tickets_abertos.append({
+                "protocol": protocol,
+                "description": dados.get("description"),
+                "created_at": dados.get("created_at")
+            })
+            
+    if not tickets_abertos:
+        return {"message": f"Nenhum chamado aberto encontrado para o cliente {customer_id}."}
+        
+    return {"open_tickets": tickets_abertos}
+
+LIST_OPEN_TICKETS_SCHEMA = {
+    "type": "function",
+    "function": {
+        "name": "list_open_tickets",
+        "description": "Lista todos os chamados de suporte abertos de um cliente.",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "customer_id": {"type": "string"}
+            },
+            "required": ["customer_id"]
+        }
+    }
+}

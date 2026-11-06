@@ -16,6 +16,7 @@ def run_agent(messages: list[dict]) -> str:
             messages=cast(list[ChatCompletionMessageParam], messages),
             tools=cast(list[ChatCompletionFunctionToolParam], TOOL_SCHEMAS),
             tool_choice="auto",
+            max_tokens=800
         )
         msg = response.choices[0].message
         if not msg.tool_calls:
